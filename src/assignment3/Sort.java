@@ -1,4 +1,4 @@
-package sort;
+package assignment3;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -8,121 +8,125 @@ import java.util.Scanner;
 
 public class Sort {
 
-    public static final String IS_NOT_ALPHANUMERIC = "[^a-zA-Z0-9]";
-    public static final String IS_LETTER = "[a-zA-Z]";
-    public static final String NO_FILES_GIVEN_EXCEPTION = "Error. No files were given.";
-    public static final String READING_FILE_EXCEPTION = "There was an error while trying to read the file.";
+	public static final String CASE_SENSITIVE = "-i";
+	public static final String DESCENDING_SORT = "-d";
+	public static final String EMPTY_STRING = "";
+	public static final String IS_NOT_ALPHANUMERIC = "[^a-zA-Z0-9]";
+	public static final String IS_LETTER = "[a-zA-Z]";
 
-    private PrintStream out;
-    private BinarySearchTree<Identifier> tree;
+	public static final String NO_FILES_GIVEN_EXCEPTION = "Error. No files were given.";
+	public static final String READING_FILE_EXCEPTION = "There was an error while trying to read the file.";
 
-    private boolean caseInsensitive;
-    private boolean descendingSort;
+	private PrintStream out;
+	private BinarySearchTree<Identifier> tree;
 
-    public Sort() {
-        out = new PrintStream(System.out);
-        tree = new BinarySearchTree<>();
+	private boolean caseInsensitive;
+	private boolean descendingSort;
 
-        caseInsensitive = false;
-        descendingSort = false;
-    }
-    
-    public void start(String[] arguments) {
-        int firstFileIndex;
+	public Sort() {
+		out = new PrintStream(System.out);
+		tree = new BinarySearchTree<>();
 
-        try {
-            firstFileIndex = readArguments(arguments);
-            readFiles(arguments, firstFileIndex);
-            printTree();
-        } catch (APException e) {
-            out.printf("%s%n", e);
-            System.exit(1);
-        }
-    }
+		caseInsensitive = false;
+		descendingSort = false;
+	}
 
-    private int readArguments(String[] arguments) throws APException {
-        for (int i = 0; i < arguments.length; i++) {
-            switch (arguments[i]) {
-                case "-i":
-                    caseInsensitive = true;
-                    break;
-                case "-d":
-                    descendingSort = true;
-                    break;
-                default:
-                    return i;
-            }
-        }
+	public static void main(String[] argv) {
+		new Sort().start(argv);
+	}
 
-        throw new APException(NO_FILES_GIVEN_EXCEPTION);
-    }
+	public void start(String[] arguments) {
+		int firstFileIndex;
 
-    private void readFiles(String[] files, int index) throws APException {
-        Scanner file;
+		try {
+			firstFileIndex = readArguments(arguments);
+			readFiles(arguments, firstFileIndex);
+			printTree();
+		} catch (APException e) {
+			out.printf("%s%n", e);
+			System.exit(1);
+		}
+	}
 
-        for (int i = index; i < files.length; i++) {
-            try {
-                file = new Scanner(new File(files[i]));
-                readIdentifiers(file);
-            } catch (FileNotFoundException e) {
-                throw new APException(READING_FILE_EXCEPTION);
-            }
-        }
-    }
+	private int readArguments(String[] arguments) throws APException { // TODO use for each loop
+		for (int i = 0; i < arguments.length; i++) {
+			switch (arguments[i]) {
+				case CASE_SENSITIVE:
+					caseInsensitive = true;
+					break;
+				case DESCENDING_SORT:
+					descendingSort = true;
+					break;
+				default:
+					return i;
+			}
+		}
 
-    private void readIdentifiers(Scanner in) {
-        in.useDelimiter(IS_NOT_ALPHANUMERIC);
+		throw new APException(NO_FILES_GIVEN_EXCEPTION);
+	}
 
-        while (in.hasNext()) {
-            Scanner identifierScanner = new Scanner(in.next()).useDelimiter("");
+	private void readFiles(String[] files, int index) throws APException {
+		Scanner file;
 
-            if (nextCharIsLetter(identifierScanner)) {
-                processIdentifier(identifierScanner);
-            }
-        }
-    }
+		for (int i = index; i < files.length; i++) {
+			try {
+				file = new Scanner(new File(files[i]));
+				readIdentifiers(file);
+			} catch (FileNotFoundException e) {
+				throw new APException(READING_FILE_EXCEPTION);
+			}
+		}
+	}
 
-    private boolean nextCharIsLetter(Scanner in) {
-        return in.hasNext(IS_LETTER);
-    }
+	private void readIdentifiers(Scanner in) {
+		in.useDelimiter(IS_NOT_ALPHANUMERIC);
 
-    private void processIdentifier(Scanner identifierScanner) {
-        Identifier identifier = new Identifier();
-        identifier.init(readChar(identifierScanner));
+		while (in.hasNext()) {
+			Scanner identifierScanner = new Scanner(in.next()).useDelimiter(EMPTY_STRING);
 
-        while (identifierScanner.hasNext()) {
-            identifier.addChar(readChar(identifierScanner));
-        }
+			if (nextCharIsLetter(identifierScanner)) {
+				processIdentifier(identifierScanner);
+			}
+		}
+	}
 
-        if (!tree.find(identifier)) {
-            tree.add(identifier);
-        } else {
-            tree.remove(identifier);
-        }
-    }
+	private boolean nextCharIsLetter(Scanner in) {
+		return in.hasNext(IS_LETTER);
+	}
 
-    private char readChar(Scanner in) {
-        if (caseInsensitive) {
-            return Character.toLowerCase(in.next().charAt(0));
-        } else {
-            return in.next().charAt(0);
-        }
-    }
+	private void processIdentifier(Scanner identifierScanner) {
+		Identifier identifier = new Identifier();
+		identifier.init(readChar(identifierScanner));
 
-    private void printTree() {
-        Iterator identifierIterator = descendingSort ? tree.descendingIterator() : tree.ascendingIterator();
+		while (identifierScanner.hasNext()) {
+			identifier.addChar(readChar(identifierScanner));
+		}
 
-        while (identifierIterator.hasNext()) {
-            printIdentifier((Identifier) identifierIterator.next());
-        }
-    }
+		if (!tree.find(identifier)) {
+			tree.add(identifier);
+		} else {
+			tree.remove(identifier);
+		}
+	}
 
-    private void printIdentifier(Identifier identifier) {
-            out.println(identifier.toString());
-    }
+	private char readChar(Scanner in) {
+		if (caseInsensitive) {
+			return Character.toLowerCase(in.next().charAt(0));
+		} else {
+			return in.next().charAt(0);
+		}
+	}
 
-    public static void main(String[] argv) {
-        new Sort().start(argv);
-    }
+	private void printTree() {
+		Iterator identifierIterator = descendingSort ? tree.descendingIterator() : tree.ascendingIterator();
+
+		while (identifierIterator.hasNext()) {
+			printIdentifier((Identifier) identifierIterator.next());
+		}
+	}
+
+	private void printIdentifier(Identifier identifier) {
+		out.println(identifier.toString());
+	}
 
 }

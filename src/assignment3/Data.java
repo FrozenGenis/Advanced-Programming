@@ -1,4 +1,4 @@
-package sort;
+package assignment3;
 
 public interface Data<E> extends Clonable<E>, Comparable<E> {
 

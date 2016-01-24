@@ -1,155 +1,155 @@
-package setCalculator;
+package assignment2;
 
 public class Set<E extends Data<E>> implements SetInterface<E> {
 
-    List<E> elements;
+	private static final String CLONE_EXCEPTION = "Could not clone Set. This should never happen.";
 
-    public Set() {
-        elements = new List<>();
-    }
+	private List<E> elements;
 
-    public Set<E> init() {
-        elements.init();
-        return this;
-    }
+	public Set() {
+		elements = new List<>();
+	}
 
-    public void add(E element) {
-        if (!elements.find(element)) {
-            elements.insert(element);
-        }
-    }
+	public Set<E> init() {
+		elements.init();
+		return this;
+	}
 
-    public void remove(E element) {
-        if (elements.find(element)) {
-            elements.remove();
-        }
-    }
+	public void add(E element) {
+		if (!elements.find(element)) {
+			elements.insert(element);
+		}
+	}
 
-    public E get() {
-        E result =  elements.retrieve();
-        elements.remove();
-        return result;
-    }
+	public void remove(E element) {
+		if (elements.find(element)) {
+			elements.remove();
+		}
+	}
 
-    public boolean isEmpty() {
-        return elements.isEmpty();
-    }
+	public E get() {
+		E result = elements.retrieve();
+		elements.remove();
+		return result;
+	}
 
-    public int size() {
-        return elements.size();
-    }
+	public boolean isEmpty() {
+		return elements.isEmpty();
+	}
 
-    public boolean contains(E element) {
-        return elements.find(element);
-    }
+	public int size() {
+		return elements.size();
+	}
 
-    @Override
-    public Set<E> clone() {
-        Set<E> result;
+	public boolean contains(E element) {
+		return elements.find(element);
+	}
 
-        try {
-            //noinspection unchecked
-            result = (Set<E>)super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new Error("Could not clone Set. This should never happen.");
-        }
+	@Override
+	public Set<E> clone() {
+		Set<E> result;
 
-        result.elements = elements.clone();
+		try {
+			//noinspection unchecked
+			result = (Set<E>) super.clone();
+		} catch (CloneNotSupportedException e) {
+			throw new Error(CLONE_EXCEPTION);
+		}
 
-        return result;
-    }
+		result.elements = elements.clone();
+		return result;
+	}
 
-    @Override
-    public String toString() {
-        StringBuilder result = new StringBuilder();
+	@Override
+	public String toString() {
+		StringBuilder result = new StringBuilder();
 
-        if (elements.isEmpty()) {
-            return result.toString();
-        }
+		if (elements.isEmpty()) {
+			return result.toString();
+		}
 
-        E memory = elements.retrieve();
-        elements.goToFirst();
+		E memory = elements.retrieve();
+		elements.goToFirst();
 
-        do {
-            result.append(elements.retrieve().toString()).append(" ");
-        } while (elements.goToNext());
+		do {
+			result.append(elements.retrieve().toString()).append(" ");
+		} while (elements.goToNext());
 
-        result.deleteCharAt(result.length() - 1);
+		result.deleteCharAt(result.length() - 1);
 
-        elements.find(memory);
+		elements.find(memory);
+		return result.toString();
+	}
 
-        return result.toString();
-    }
+	public Set<E> union(Set<E> that) {
+		Set<E> result = this.clone();
+		Set<E> thatCopy = that.clone();
+		thatCopy.elements.goToFirst();
 
-    public Set<E> union(Set<E> that) {
-        Set<E> result = this.clone();
-        Set<E> thatCopy = that.clone();
-        thatCopy.elements.goToFirst();
+		for (int i = 0; i < that.size(); i++) {
+			result.add(thatCopy.get());
+		}
 
-        for (int i = 0; i < that.size(); i++) {
-            result.add(thatCopy.get());
-        }
+		return result;
+	}
 
-        return result;
-    }
+	public Set<E> intersection(Set<E> that) {
+		Set<E> result = new Set<>();
+		Set<E> thatCopy = that.clone();
+		thatCopy.elements.goToFirst();
 
-    public Set<E> intersection(Set<E> that) {
-        Set<E> result = new Set<>();
-        Set<E> thatCopy = that.clone();
-        thatCopy.elements.goToFirst();
+		for (int i = 0; i < that.size(); i++) {
+			E element = thatCopy.get();
 
-        for (int i = 0; i < that.size(); i++) {
-            E  element = thatCopy.get();
+			if (this.contains(element)) {
+				result.add(element);
+			}
+		}
 
-            if (this.contains(element)) {
-                result.add(element);
-            }
-        }
+		return result;
+	}
 
-        return result;
-    }
+	public Set<E> complement(Set<E> that) {
+		Set<E> result = new Set<>();
+		Set<E> thatCopy = that.clone();
+		thatCopy.elements.goToFirst();
 
-    public Set<E> complement(Set<E> that) {
-        Set<E> result = new Set<>();
-        Set<E> thatCopy = that.clone();
-        thatCopy.elements.goToFirst();
+		for (int i = 0; i < that.size(); i++) {
+			E element = thatCopy.get();
 
-        for (int i = 0; i < that.size(); i++) {
-            E element = thatCopy.get();
+			if (!this.contains(element)) {
+				result.add(element);
+			}
+		}
 
-            if (!this.contains(element)) {
-                result.add(element);
-            }
-        }
+		return result;
+	}
 
-        return result;
-    }
+	public Set<E> symmetricDifference(Set<E> that) {
+		Set<E> result = new Set<>();
+		Set<E> thisCopy = this.clone();
+		Set<E> thatCopy = that.clone();
+		thatCopy.elements.goToFirst();
 
-    public Set<E> symmetricDifference(Set<E> that) {
-        Set<E> result = new Set<>();
-        Set<E> thisCopy = this.clone();
-        Set<E> thatCopy = that.clone();
-        thatCopy.elements.goToFirst();
+		for (int i = 0; i < that.size(); i++) {
+			E element = thatCopy.get();
 
-        for (int i = 0; i < that.size(); i++) {
-            E element = thatCopy.get();
+			if (!this.contains(element)) {
+				result.add(element);
+			}
+		}
 
-            if (!this.contains(element)) {
-                result.add(element);
-            }
-        }
+		thisCopy.elements.goToFirst();
 
-        thisCopy.elements.goToFirst();
+		for (int i = 0; i < this.size(); i++) {
+			E element = thisCopy.get();
 
-        for (int i = 0; i < this.size(); i++) {
-            E element = thisCopy.get();
+			if (!that.contains(element)) {
+				result.add(element);
+			}
+		}
 
-            if (!that.contains(element)) {
-                result.add(element);
-            }
-        }
-
-        return result;
-    }
+		return result;
+	}
 
 }

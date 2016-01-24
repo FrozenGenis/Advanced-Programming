@@ -1,115 +1,119 @@
-package setCalculator;
+package assignment2;
 
 public class Map<K extends Data<K>, V extends Clonable<V>> implements MapInterface<K, V> {
 
-    private List<MapEntry> elements;
+	private static final String CLONE_EXCEPTION = "Could not clone Map. This should never happen.";
 
-    public Map() {
-        this.elements = new List<>();
-    }
+	private List<MapEntry> elements;
 
-    public Map<K, V> init() {
-        elements.init();
-        return this;
-    }
+	public Map() {
+		this.elements = new List<>();
+	}
 
-    public void put(K key, V value) {
-        elements.insert(new MapEntry(key, value));
-    }
+	public Map<K, V> init() {
+		elements.init();
+		return this;
+	}
 
-    public void remove(K key) {
-        if (elements.find(new MapEntry(key))) {
-            elements.remove();
-        }
-    }
+	public void put(K key, V value) {
+		elements.insert(new MapEntry(key, value));
+	}
 
-    public V get(K key) {
-        for (int i = 0; i < elements.size(); i++) {
-            if (elements.find(new MapEntry(key))) {
-                return elements.retrieve().value;
-            }
-        }
+	public void remove(K key) {
+		if (elements.find(new MapEntry(key))) {
+			elements.remove();
+		}
+	}
 
-        // this should never be executed
-        return null;
-    }
+	public V get(K key) {
+		for (int i = 0; i < elements.size(); i++) {
+			if (elements.find(new MapEntry(key))) {
+				return elements.retrieve().value;
+			}
+		}
 
-    public boolean isEmpty() {
-        return (elements.isEmpty());
-    }
+		// this should never be executed
+		return null;
+	}
 
-    public int size() {
-        return elements.size();
-    }
+	public boolean isEmpty() {
+		return (elements.isEmpty());
+	}
 
-    public boolean contains(K key) {
-        for (int i = 0; i < elements.size(); i++) {
-            if (elements.find(new MapEntry(key))) {
-                return true;
-            }
-        }
+	public int size() {
+		return elements.size();
+	}
 
-        return false;
-    }
+	public boolean contains(K key) {
+		for (int i = 0; i < elements.size(); i++) {
+			if (elements.find(new MapEntry(key))) {
+				return true;
+			}
+		}
 
-    @Override
-    public Map<K, V> clone() {
-        Map<K,V> result;
+		return false;
+	}
 
-        try {
-            //noinspection unchecked
-            result = (Map<K, V>)super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new Error("Could not clone Map. This should never happen.");
-        }
+	@Override
+	public Map<K, V> clone() {
+		Map<K, V> result;
 
-        result.elements = elements.clone();
+		try {
+			//noinspection unchecked
+			result = (Map<K, V>) super.clone();
+		} catch (CloneNotSupportedException e) {
+			throw new Error(CLONE_EXCEPTION);
+		}
 
-        return result;
-    }
+		result.elements = elements.clone();
 
-    private class MapEntry implements Data<MapEntry> {
+		return result;
+	}
 
-        private K key;
-        private V value;
+	private class MapEntry implements Data<MapEntry> {
 
-        @SuppressWarnings("unused")
-        public MapEntry() {
-            this.key = null;
-            this.value = null;
-        }
+		public static final String CLONE_EXCEPTION = "Could not clone MapEntry. This should never happen.";
 
-        public MapEntry(K key) {
-            this.key = key.clone();
-            this.value = null;
-        }
+		private K key;
+		private V value;
 
-        public MapEntry(K key, V value) {
-            this.key = key.clone();
-            this.value = value.clone();
-        }
+		@SuppressWarnings("unused")
+		public MapEntry() {
+			this.key = null;
+			this.value = null;
+		}
 
-        public MapEntry clone() {
-            MapEntry result;
+		public MapEntry(K key) {
+			this.key = key.clone();
+			this.value = null;
+		}
 
-            try {
-                //noinspection unchecked
-                result = (MapEntry)super.clone();
-            } catch (CloneNotSupportedException e) {
-                throw new Error("Could not clone MapEntry. This should never happen.");
-            }
+		public MapEntry(K key, V value) {
+			this.key = key.clone();
+			this.value = value.clone();
+		}
 
-            result.key = key.clone();
-            result.value = value.clone();
+		public MapEntry clone() {
+			MapEntry result;
 
-            return result;
-        }
+			try {
+				//noinspection unchecked
+				result = (MapEntry) super.clone();
+			} catch (CloneNotSupportedException e) {
+				throw new Error(CLONE_EXCEPTION);
+			}
 
-        @Override
-        @SuppressWarnings("NullableProblems")
-        public int compareTo(MapEntry that) {
-            return this.key.compareTo(that.key);
-        }
-    }
+			result.key = key.clone();
+			result.value = value.clone();
+
+			return result;
+		}
+
+		@Override
+		@SuppressWarnings("NullableProblems")
+		public int compareTo(MapEntry that) {
+			return this.key.compareTo(that.key);
+		}
+	}
 
 }

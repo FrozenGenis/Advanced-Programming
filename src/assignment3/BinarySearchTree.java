@@ -1,4 +1,4 @@
-package sort;
+package assignment3;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -6,167 +6,172 @@ import java.util.List;
 
 public class BinarySearchTree<E extends Data<E>> implements BinarySearchTreeInterface<E> {
 
-    private Node root;
+	public static final String CLONE_EXCEPTION = "Could not clone BinarySearchTree. This should never happen.";
 
-    public BinarySearchTree() {
-        root = null;
-    }
+	private Node root;
 
-    public boolean isEmpty() {
-        return root == null;
-    }
+	public BinarySearchTree() {
+		root = null;
+	}
 
-    public boolean find(E element) {
-        Node current = root;
+	public boolean isEmpty() {
+		return root == null;
+	}
 
-        while (current != null) {
-            if (current.data.compareTo(element) == 0 ) {
-                return true;
-            }
+	public boolean find(E element) {
+		Node current = root;
 
-            if (current.data.compareTo(element) > 0 ) {
-                current = current.left;
-            } else { // current.data <= 0
-                current = current.right;
-            }
-        }
+		while (current != null) {
+			if (current.data.compareTo(element) == 0) {
+				return true;
+			}
 
-        return false;
-    }
+			if (current.data.compareTo(element) > 0) {
+				current = current.left;
+			} else { // current.data < 0
+				current = current.right;
+			}
+		}
 
-    public BinarySearchTree<E> add(E element) {
-        root = add(root, element);
-        return this;
-    }
+		return false;
+	}
 
-    public Node add(Node node, E element) {
-        if (node == null) {
-            return new Node(element);
-        }
+	public BinarySearchTree<E> add(E element) {
+		root = add(root, element);
+		return this;
+	}
 
-        if (element.compareTo(node.data) <= 0) {
-            node.left = add(node.left, element);
-        } else { // element > node.data
-            node.right = add(node.right, element);
-        }
+	public Node add(Node node, E element) {
+		if (node == null) {
+			return new Node(element);
+		}
 
-        return node;
-    }
+		if (element.compareTo(node.data) <= 0) {
+			node.left = add(node.left, element);
+		} else { // element > node.data
+			node.right = add(node.right, element);
+		}
 
-    public BinarySearchTree<E> remove(E element) {
-        root = remove(root, element);
-        return this;
-    }
-    
-    public Node remove(Node node, E element) {
-        if (element.compareTo(node.data) < 0) {
-            node.left = remove(node.left, element);
-        } else if (element.compareTo(node.data) > 0) {
-            node.right = remove(node.right, element);
-        } else if (node.left != null && node.right != null) {
-            node.data = findMaximum(node.left);
-            node.left = remove(node.left, node.data);
-        } else {
-            node = node.left != null ? node.left : node.right;
-        }
+		return node;
+	}
 
-        return node;
-    }
+	public BinarySearchTree<E> remove(E element) {
+		root = remove(root, element);
+		return this;
+	}
 
-    private E findMaximum(Node node) {
-        if (node.right == null) {
-            return node.data;
-        } else {
-            return findMaximum(node.right);
-        }
-    }
+	public Node remove(Node node, E element) {
+		if (element.compareTo(node.data) < 0) {
+			node.left = remove(node.left, element);
+		} else if (element.compareTo(node.data) > 0) {
+			node.right = remove(node.right, element);
+		} else if (node.left != null && node.right != null) {
+			node.data = findMaximum(node.left);
+			node.left = remove(node.left, node.data);
+		} else {
+			node = node.left != null ? node.left : node.right;
+		}
 
-    public Iterator<E> ascendingIterator() {
-        List<E> result = new ArrayList<>();
+		return node;
+	}
 
-        populateAscendingArrayList(root, result);
+	private E findMaximum(Node node) {
+		if (node.right == null) {
+			return node.data;
+		} else {
+			return findMaximum(node.right);
+		}
+	}
 
-        return result.iterator();
-    }
+	public Iterator<E> ascendingIterator() {
+		List<E> result = new ArrayList<>();
 
-    public Iterator<E> descendingIterator() {
-        List<E> result = new ArrayList<>();
+		populateAscendingArrayList(root, result);
 
-        populateDescendingArrayList(root, result);
+		return result.iterator();
+	}
 
-        return result.iterator();
-    }
+	public Iterator<E> descendingIterator() {
+		List<E> result = new ArrayList<>();
 
-    private void populateAscendingArrayList(Node node, List<E> list) {
-        if (node != null) {
-            populateAscendingArrayList(node.left, list);
-            list.add(node.data);
-            populateAscendingArrayList(node.right, list);
-        }
-    }
+		populateDescendingArrayList(root, result);
 
-    private void populateDescendingArrayList(Node node, List<E> list) {
-        if (node != null) {
-            populateDescendingArrayList(node.right, list);
-            list.add(node.data);
-            populateDescendingArrayList(node.left, list);
-        }
-    }
+		return result.iterator();
+	}
 
-    public BinarySearchTree<E> clone() {
-        BinarySearchTree<E> result;
+	private void populateAscendingArrayList(Node node, List<E> list) {
+		if (node != null) {
+			populateAscendingArrayList(node.left, list);
+			list.add(node.data);
+			populateAscendingArrayList(node.right, list);
+		}
+	}
 
-        try {
-            //noinspection unchecked
-            result = (BinarySearchTree<E>)super.clone();
-        } catch(CloneNotSupportedException e) {
-            throw new Error("Could not clone tree. This should never happen.");
-        }
-        
-        result.root = root == null ? null : root.clone();
+	private void populateDescendingArrayList(Node node, List<E> list) {
+		if (node != null) {
+			populateDescendingArrayList(node.right, list);
+			list.add(node.data);
+			populateDescendingArrayList(node.left, list);
+		}
+	}
 
-        return result;
-    }
+	public BinarySearchTree<E> clone() {
+		BinarySearchTree<E> result;
 
-    private class Node {
+		try {
+			//noinspection unchecked
+			result = (BinarySearchTree<E>) super.clone();
+		} catch (CloneNotSupportedException e) {
+			throw new Error(CLONE_EXCEPTION);
+		}
 
-        private E data;
-        private Node left;
-        private Node right;
+		result.root = root == null ? null : root.clone();
 
-        public Node() {
-            this.data = null;
-            this.left = null;
-            this.right = null;
-        }
+		return result;
+	}
 
-        public Node(E data) {
-            this(data, null, null);
-        }
+	private class Node {
 
-        public Node(E data, Node left, Node right) {
-            this.data = data;
-            this.left = left;
-            this.right = right;
-        }
+		public static final String CLONE_EXCEPTION = "Could not clone Node. This should never happen ";
 
-        public Node clone () {
-            Node result;
+		private E data;
+		private Node left;
+		private Node right;
 
-            try {
-                //noinspection unchecked
-                result = (Node)super.clone();
-            } catch (CloneNotSupportedException e) {
-                throw new Error("Could not clone Node. This should never happen ");
-            }
+		@SuppressWarnings("unused")
+		public Node() {
+			this.data = null;
+			this.left = null;
+			this.right = null;
+		}
 
-            result.data = data == null ? null : data.clone();
-            result.left = left.clone();
-            result.right = right.clone();
+		public Node(E data) {
+			this(data, null, null);
+		}
 
-            return result;
-        }
+		public Node(E data, Node left, Node right) {
+			this.data = data;
+			this.left = left;
+			this.right = right;
+		}
 
-    }
+		public Node clone() {
+			Node result;
+
+			try {
+				//noinspection unchecked
+				result = (Node) super.clone();
+			} catch (CloneNotSupportedException e) {
+				throw new Error(CLONE_EXCEPTION);
+			}
+
+			result.data = data == null ? null : data.clone();
+			result.left = left.clone();
+			result.right = right.clone();
+
+			return result;
+		}
+
+	}
 
 }

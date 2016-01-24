@@ -1,65 +1,70 @@
-package setCalculator;
+package assignment2;
 
 public class NaturalNumber implements NaturalNumberInterface<NaturalNumber> {
 
-    private StringBuffer number;
+	public static final String CLONE_EXCEPTION = "Could not clone Identifier. This should never happen.";
 
-    public NaturalNumber() {
-        number = new StringBuffer("0");
-    }
+	public static final String DEFAULT_NUMBER = "0";
 
-    public NaturalNumber init(char c) {
-        number = new StringBuffer();
-        number.append(c);
-        return this;
-    }
+	private StringBuffer number;
 
-    public String getNumber() {
-        return number.toString();
-    }
+	public NaturalNumber() {
+		number = new StringBuffer(DEFAULT_NUMBER);
+	}
 
-    public void setNumber(String number) {
-        this.number = new StringBuffer(number);
-    }
+	public NaturalNumber init(char c) {
+		number = new StringBuffer();
+		number.append(c);
+		return this;
+	}
 
-    public void addDigit(char c) {
-        number.append(c);
-    }
+	public String getNumber() {
+		return number.toString();
+	}
 
-    public char getDigit(int position) {
-        return number.charAt(position);
-    }
+	public void setNumber(String number) {
+		this.number = new StringBuffer(number);
+	}
 
-    public int length() {
-        return number.length();
-    }
+	public void addDigit(char c) {
+		number.append(c);
+	}
 
-    @Override
-    public boolean equals(NaturalNumberInterface that) {
-        return that != null && that.getClass() == this.getClass() && this.compareTo((NaturalNumber)that) == 0;
-    }
+	public char getDigit(int position) {
+		return number.charAt(position);
+	}
 
-    @Override
-    public int compareTo(NaturalNumber that) {
-        return this.getNumber().compareTo(that.getNumber());
-    }
+	public int length() {
+		return number.length();
+	}
 
-    @Override
-    public NaturalNumber clone() {
-        NaturalNumber result;
+	@Override
+	public boolean equals(Object o) {
+		return o != null && o.getClass() == this.getClass() && this.compareTo((NaturalNumber) o) == 0;
+	}
 
-        try {
-            result = (NaturalNumber)super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new Error("Could not clone Identifier. This should never happen.");
-        }
+	@Override
+	public int compareTo(NaturalNumber that) {
+		return Integer.valueOf(this.toString()).compareTo(Integer.valueOf(that.toString()));
+//		return this.getNumber().compareTo(that.getNumber());
+	}
 
-        return result;
-    }
+	@Override
+	public NaturalNumber clone() {
+		NaturalNumber result;
 
-    @Override
-    public String toString() {
-        return number.toString();
-    }
+		try {
+			result = (NaturalNumber) super.clone();
+		} catch (CloneNotSupportedException e) {
+			throw new Error(CLONE_EXCEPTION);
+		}
+
+		return result;
+	}
+
+	@Override
+	public String toString() {
+		return number.toString();
+	}
 
 }

@@ -1,4 +1,4 @@
-package setCalculator;
+package assignment2;
 
 public interface Clonable<E> extends Cloneable {
 
@@ -6,6 +6,6 @@ public interface Clonable<E> extends Cloneable {
        a public version.
     */
 
-    E clone();
+	E clone();
 
 }

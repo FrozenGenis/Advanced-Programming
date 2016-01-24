@@ -1,236 +1,239 @@
-package setCalculator;
+package assignment2;
 
 public class List<E extends Data<E>> implements ListInterface<E> {
 
-    private Node first;
-    private Node last;
-    private Node current;
+	public static final String CLONE_EXCEPTION = "Could not clone List. This should never happen.";
 
-    private int numberOfNodes;
+	public static final int INITIAL_AMOUNT_OF_NODES = 0;
 
-    public List() {
-        first = last = current = null;
-        numberOfNodes = 0;
-    }
+	private Node first;
+	private Node last;
+	private Node current;
 
-    public boolean isEmpty() {
-        return current == null;
-    }
+	private int numberOfNodes;
 
-    public List<E> init() {
-        numberOfNodes = 0;
-        first = last = current = null;
+	public List() {
+		first = last = current = null;
+		numberOfNodes = INITIAL_AMOUNT_OF_NODES;
+	}
 
-        return this;
-    }
+	public boolean isEmpty() {
+		return current == null;
+	}
 
-    public int size() {
-        return numberOfNodes;
-    }
+	public List<E> init() {
+		numberOfNodes = INITIAL_AMOUNT_OF_NODES;
+		first = last = current = null;
 
-    public List<E> insert(E e) {
-        if (numberOfNodes == 0) {
-            last = current = first = new Node(e);
-        } else if (current == first) {
-            if (e.compareTo(current.data) <= 0) {
-                insertBeforeCurrent(e);
-                first = current;
-            } else {
-                insertInOrderAsc(e);
-            }
-        } else if (current == last) {
-            if (e.compareTo(current.data) >= 0) {
-                insertAfterCurrent(e);
-                last = current;
-            } else {
-                insertInOrderDesc(e);
-            }
-        } else { // in the middle
-            if (e.compareTo(current.data) >= 0) {
-                insertInOrderAsc(e);
-            } else { // e < current.data
-                insertInOrderDesc(e);
-            }
-        }
+		return this;
+	}
 
-        numberOfNodes += 1;
-        return this;
-    }
+	public int size() {
+		return numberOfNodes;
+	}
 
-    private void insertInOrderAsc(E e) {
-        while (true) {
-            if (current.data.compareTo(last.data) == 0) {
-                if (e.compareTo(current.data) >= 0) {
-                    insertAfterCurrent(e);
-                    last = current;
-                } else { // e < current
-                    insertBeforeCurrent(e);
-                }
+	public List<E> insert(E e) {
+		if (numberOfNodes == 0) {
+			last = current = first = new Node(e);
+		} else if (current == first) {
+			if (e.compareTo(current.data) <= 0) {
+				insertBeforeCurrent(e);
+				first = current;
+			} else {
+				insertInOrderAsc(e);
+			}
+		} else if (current == last) {
+			if (e.compareTo(current.data) >= 0) {
+				insertAfterCurrent(e);
+				last = current;
+			} else {
+				insertInOrderDesc(e);
+			}
+		} else { // in the middle
+			if (e.compareTo(current.data) >= 0) {
+				insertInOrderAsc(e);
+			} else { // e < current.data
+				insertInOrderDesc(e);
+			}
+		}
 
-                return;
-            }
+		numberOfNodes += 1;
+		return this;
+	}
 
-            if (e.compareTo(current.data) > 0) {
-                goToNext();
-                continue;
-            }
+	private void insertInOrderAsc(E e) {
+		while (true) {
+			if (current.data.compareTo(last.data) == 0) {
+				if (e.compareTo(current.data) >= 0) {
+					insertAfterCurrent(e);
+					last = current;
+				} else { // e < current
+					insertBeforeCurrent(e);
+				}
 
-            insertBeforeCurrent(e);
-            return;
-        }
-    }
+				return;
+			}
 
-    private void insertInOrderDesc(E e) {
-        while (true) {
-            if (current.data.compareTo(first.data) == 0) {
-                if (e.compareTo(current.data) <= 0) {
-                    insertBeforeCurrent(e);
-                    first = current;
-                } else { // e > current
-                    insertAfterCurrent(e);
-                }
+			if (e.compareTo(current.data) > 0) {
+				goToNext();
+				continue;
+			}
 
-                return;
-            }
+			insertBeforeCurrent(e);
+			return;
+		}
+	}
 
-            if (e.compareTo(current.data) < 0) {
-                goToPrevious();
-                continue;
-            }
+	private void insertInOrderDesc(E e) {
+		while (true) {
+			if (current.data.compareTo(first.data) == 0) {
+				if (e.compareTo(current.data) <= 0) {
+					insertBeforeCurrent(e);
+					first = current;
+				} else { // e > current
+					insertAfterCurrent(e);
+				}
 
-            insertAfterCurrent(e);
-            return;
-        }
-    }
+				return;
+			}
 
-    private void insertBeforeCurrent(E e) {
-        current.prior = new Node(e, current.prior, current);
-        current = current.prior;
-    }
+			if (e.compareTo(current.data) < 0) {
+				goToPrevious();
+				continue;
+			}
 
-    private void insertAfterCurrent(E e) {
-        current.next = new Node(e, current, current.next);
-        current = current.next;
-    }
+			insertAfterCurrent(e);
+			return;
+		}
+	}
 
-    public E retrieve() {
-        return current.data.clone();
-    }
+	private void insertBeforeCurrent(E e) {
+		current.prior = new Node(e, current.prior, current);
+		current = current.prior;
+	}
 
-    public List<E> remove() {
-        if (numberOfNodes == 1) {
-            first = last = current = null;
-        } else if (current == first) {
-            current = first = current.next;
-            current.prior = null;
-        } else if (current == last) {
-            current = last = current.prior;
-            current.next = null;
-        } else { // in the middle
-            current.prior.next = current.next;
-            current.next.prior = current.prior;
-            current = current.next;
-        }
+	private void insertAfterCurrent(E e) {
+		current.next = new Node(e, current, current.next);
+		current = current.next;
+	}
 
-        numberOfNodes -= 1;
-        return this;
-    }
+	public E retrieve() {
+		return current.data.clone();
+	}
 
-    public boolean find(E e) {
-        if (numberOfNodes == 0) {
-            return false;
-        }
+	public List<E> remove() {
+		if (numberOfNodes == 1) {
+			first = last = current = null;
+		} else if (current == first) {
+			current = first = current.next;
+			current.prior = null;
+		} else if (current == last) {
+			current = last = current.prior;
+			current.next = null;
+		} else { // in the middle
+			current.prior.next = current.next;
+			current.next.prior = current.prior;
+			current = current.next;
+		}
 
-        current = first;
+		numberOfNodes -= 1;
+		return this;
+	}
 
-        while (current != null && e.compareTo(current.data) >= 0) {
-            if (e.compareTo(current.data) == 0) {
-                return true;
-            }
+	public boolean find(E e) {
+		if (numberOfNodes == 0) {
+			return false;
+		}
 
-            current = current.next;
-        }
+		current = first;
 
-        if (current == null) {
-            current = last;
-        } else {
-            current = current.prior;
-        }
+		while (current != null && e.compareTo(current.data) >= 0) {
+			if (e.compareTo(current.data) == 0) {
+				return true;
+			}
+			current = current.next;
+		}
 
-        return false;
-    }
+		if (current == null) {
+			current = last;
+		} else {
+			current = current.prior;
+		}
 
-    public boolean goToFirst() {
-        if (numberOfNodes == 0) {
-            return false;
-        }
+		return false;
+	}
 
-        current = first;
-        return true;
-    }
+	public boolean goToFirst() {
+		if (numberOfNodes == 0) {
+			return false;
+		}
 
-    public boolean goToLast() {
-        if (numberOfNodes == 0) {
-            return false;
-        }
+		current = first;
+		return true;
+	}
 
-        current = last;
-        return true;
-    }
+	public boolean goToLast() {
+		if (numberOfNodes == 0) {
+			return false;
+		}
 
-    public boolean goToNext() {
-        if (numberOfNodes == 0 || current == last) {
-            return false;
-        }
+		current = last;
+		return true;
+	}
 
-        current = current.next;
-        return true;
-    }
+	public boolean goToNext() {
+		if (numberOfNodes == 0 || current == last) {
+			return false;
+		}
 
-    public boolean goToPrevious() {
-        if (numberOfNodes == 0 || current == first) {
-            return false;
-        }
+		current = current.next;
+		return true;
+	}
 
-        current = current.prior;
-        return true;
-    }
+	public boolean goToPrevious() {
+		if (numberOfNodes == 0 || current == first) {
+			return false;
+		}
 
-    @Override
-    public List<E> clone() {
-        List<E> result;
+		current = current.prior;
+		return true;
+	}
 
-        try {
-            //noinspection unchecked
-            result = (List<E>)super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new Error("Could not clone List. This should never happen.");
-        }
+	@Override
+	public List<E> clone() {
+		List<E> result;
 
-        return result;
-    }
+		try {
+			//noinspection unchecked
+			result = (List<E>) super.clone();
+		} catch (CloneNotSupportedException e) {
+			throw new Error(CLONE_EXCEPTION);
+		}
 
-    public class Node {
+		return result;
+	}
 
-        E data;
-        Node prior;
-        Node next;
+	public class Node {
 
-        @SuppressWarnings("unused")
-        public Node() {
-            this(null, null, null);
-        }
+		E data;
+		Node prior;
+		Node next;
 
-        public Node(E d) {
-            this(d, null, null);
-        }
+		@SuppressWarnings("unused")
+		public Node() {
+			this(null, null, null);
+		}
 
-        public Node(E data, Node prior, Node next) {
-            this.data = data;
-            this.prior = prior;
-            this.next = next;
-        }
+		public Node(E data) {
+			this(data, null, null);
+		}
 
-    }
+		public Node(E data, Node prior, Node next) {
+			this.data = data;
+			this.prior = prior;
+			this.next = next;
+		}
+
+	}
 
 }
