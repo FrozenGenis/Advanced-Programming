@@ -111,6 +111,7 @@ public class List<E extends Data<E>> implements ListInterface<E> {
 		}
 	}
 
+	@SuppressWarnings("ConstantConditions")
 	private void insertBeforeCurrent(E e) {
 		if (current.prior == null) {
 			current.prior = new Node(e, current.prior, current);
@@ -121,6 +122,7 @@ public class List<E extends Data<E>> implements ListInterface<E> {
 		current = current.prior;
 	}
 
+	@SuppressWarnings("ConstantConditions")
 	private void insertAfterCurrent(E e) {
 		if (current.next == null) {
 			current.next = new Node(e, current, current.next);

@@ -65,6 +65,11 @@ public class NaturalNumber implements NaturalNumberInterface<NaturalNumber> {
 	}
 
 	@Override
+	public String toString() {
+		return number.toString();
+	}
+
+	@Override
 	public NaturalNumber clone() {
 		NaturalNumber result;
 
@@ -75,11 +80,6 @@ public class NaturalNumber implements NaturalNumberInterface<NaturalNumber> {
 		}
 
 		return result;
-	}
-
-	@Override
-	public String toString() {
-		return number.toString();
 	}
 
 }

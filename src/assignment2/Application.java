@@ -6,11 +6,6 @@ import java.util.regex.Pattern;
 
 public class Application {
 
-	/*
-	 * Bravo = {17, 15, 13, 7, 9, 3, 5, 1 }
-	 * Bravo = {1, 3, 5, 7, 9, 1234567890, 13, 15, 17, 98765432100 }
-	 */
-
 	public static final String EMPTY_STRING = "";
 	public static final char SPACE = ' ';
 	public static final char ZERO = '0';
