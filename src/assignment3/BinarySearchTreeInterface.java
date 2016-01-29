@@ -4,6 +4,22 @@ import java.util.Iterator;
 
 public interface BinarySearchTreeInterface<E extends Data<E>> extends Clonable<BinarySearchTree<E>> {
 
+	/** ADT for the class BinarySearchTreeInterface.
+	 *
+	 * @author : Leroy Truong & Radu Sibechi
+	 *
+	 * @elements : objects of type E
+	 * @structure: linear
+	 * @domain   : -
+	 *
+	 * @constructor
+	 *	BinarySearchTree();
+	 *	    @precondition
+	 *           -
+	 *		@postcondition
+	 *           The new BinarySearchTree-object is initialized with null as its root.
+	 **/
+
 	/**
 	 * Checks whether the tree is empty.
 	 *
