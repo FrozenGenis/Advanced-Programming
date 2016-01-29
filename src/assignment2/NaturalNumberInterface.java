@@ -65,10 +65,10 @@ public interface NaturalNumberInterface<T> extends Data<T> {
 	int length();
 
 	/**
-	 * Returns whether the given object is equal to this NaturalNumber.
+	 * Returns whether the given object is equal to this natural number.
 	 *
 	 * @precondition    -
-	 * @postcondition   Returns whether the given object is equal to this NaturalNumber.
+	 * @postcondition   Returns whether the given object is equal to this natural number.
 	 */
 	boolean equals(Object o);
 

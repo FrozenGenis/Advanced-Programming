@@ -65,7 +65,7 @@ public interface IdentifierInterface<T> extends Data<T> {
 	int length();
 
 	/**
-	 * Returns whether the two identifiers are equal.
+	 * Returns whether the given object is equal to this identifier.
 	 *
 	 * @precondition    -
 	 * @postcondition   Returns whether the given object is equal to this identifier.
