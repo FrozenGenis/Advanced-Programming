@@ -2,6 +2,8 @@ package assignment2;
 
 public class Identifier implements IdentifierInterface<Identifier> {
 
+	public static final String CLONE_EXCEPTION = "Could not clone Identifier. This should never happen.";
+
 	public static final String DEFAULT_NAME = "a";
 
 	private StringBuffer name;
@@ -63,7 +65,7 @@ public class Identifier implements IdentifierInterface<Identifier> {
 		try {
 			result = (Identifier) super.clone();
 		} catch (CloneNotSupportedException e) {
-			throw new Error("Could not clone Identifier. This should never happen.");
+			throw new Error(CLONE_EXCEPTION);
 		}
 
 		result.name = new StringBuffer(name);

@@ -17,40 +17,50 @@ public class Identifier implements IdentifierInterface<Identifier> {
 		name.append(c);
 	}
 
+	@Override
 	public Identifier init(char c) {
 		name = new StringBuffer();
 		name.append(c);
 		return this;
 	}
 
+	@Override
 	public String getName() {
 		return name.toString();
 	}
 
+	@Override
 	public void setName(String name) {
 		this.name = new StringBuffer(name);
 	}
 
+	@Override
 	public char getChar(int position) {
 		return name.charAt(position);
 	}
 
+	@Override
 	public void addChar(char c) {
 		name.append(c);
 	}
 
+	@Override
 	public int length() {
 		return name.length();
 	}
 
 	@Override
-	public boolean equals(IdentifierInterface that) {
-		return that != null && that.getClass() == this.getClass() && this.compareTo((Identifier) that) == 0;
+	public boolean equals(Object o) {
+		return o != null && o.getClass() == this.getClass() && this.compareTo((Identifier) o) == 0;
 	}
 
 	@Override
 	public int compareTo(Identifier that) {
 		return this.getName().compareTo(that.getName());
+	}
+
+	public String toString() {
+		return name.toString();
 	}
 
 	@Override
@@ -64,10 +74,6 @@ public class Identifier implements IdentifierInterface<Identifier> {
 		}
 
 		return result;
-	}
-
-	public String toString() {
-		return name.toString();
 	}
 
 }

@@ -1,8 +1,10 @@
 package assignment3;
 
-class APException extends Exception {
+public class APException extends Exception {
 
-	APException(String s) {
+	private static final long serialVersionUID = 1L;
+
+	public APException(String s) {
 		super(s);
 	}
 
