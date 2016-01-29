@@ -62,6 +62,7 @@ public class Application {
 
 		//noinspection InfiniteLoopStatement
 		while (true) {
+			checkIfTerminated(in);
 			program = in.nextLine();
 			programScanner = new Scanner(program).useDelimiter(EMPTY_STRING);
 
@@ -70,6 +71,12 @@ public class Application {
 			} catch (APException e) {
 				out.println(e);
 			}
+		}
+	}
+
+	private void checkIfTerminated(Scanner input) {
+		if (!input.hasNext()) {
+			System.exit(0);
 		}
 	}
 
