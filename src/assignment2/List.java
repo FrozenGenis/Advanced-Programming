@@ -235,9 +235,20 @@ public class List<E extends Data<E>> implements ListInterface<E> {
 		try {
 			//noinspection unchecked
 			result = (List<E>) super.clone();
+			result.init();
 		} catch (CloneNotSupportedException e) {
 			throw new Error(CLONE_EXCEPTION);
 		}
+
+		Node placeholder = current;
+		current = first;
+
+		for (int i = 0; i < numberOfNodes; i++) {
+			result.insert(this.retrieve());
+			goToNext();
+		}
+
+		current = placeholder;
 
 		return result;
 	}
