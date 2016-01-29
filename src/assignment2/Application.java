@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 public class Application {
 
 	/**
-	 * Current issues (3):
+	 * Current issues (2):
 	 *
 	 * / The next line contains two assignments, and is not a statement according to the syntax
 	 * Alfa = {1, 10, 100, 1000}          Delta = {3, 4}
@@ -47,10 +47,10 @@ public class Application {
 	public static final String POSITIVE_NUMBER_NOT_FOUND_EXCEPTION = "Positive number not found.";
 	public static final String KEY_NOT_FOUND_EXCEPTION = "The specified key [%s] could not be found.";
 	public static final String UNKNOWN_COMMAND_EXCEPTION = "The command [%c] is not available.";
-	public static final String INVALID_INPUT_EXCEPTION = "Invalid input. NaturalNumber should only contain digits.";
+	public static final String INVALID_NATURAL_NUMBER = "Invalid number. Numbers should only contain digits.";
 	public static final String NUMBER_STARTS_WITH_ZERO_EXCEPTION = "Number can't start with a 0 (eg. 05 is forbidden).";
 	public static final String CHAR_MISSING_EXCEPTION = "\'%c\' is missing.";
-	public static final String COMMENT_IN_ASSIGNMENT_EXCEPTION = "The '/' should not be in the middle of an assignment!";
+	public static final String INVALID_STATEMENT_EXCEPTION = "Invalid statement. Each line should contain only one statement, and each statement should end with an end of line.";
 
 	private PrintStream out;
 
@@ -133,13 +133,6 @@ public class Application {
 	}
 
 	private void readComment(Scanner input) throws APException {
-		nextChar(input);
-		trimSpaces(input);
-
-		if (nextCharIsMultiplicativeOperator(input) || nextCharIsAdditiveOperator(input)) {
-			throw new APException(COMMENT_IN_ASSIGNMENT_EXCEPTION);
-		}
-
 		input.nextLine();
 	}
 
@@ -155,6 +148,12 @@ public class Application {
 		trimSpaces(input);
 
 		Set<NaturalNumber> expression = readExpression(input);
+
+		trimSpaces(input);
+
+		if (input.hasNext()) {
+			throw new APException(INVALID_STATEMENT_EXCEPTION);
+		}
 
 		assignments.put(identifier, expression);
 	}
@@ -317,7 +316,7 @@ public class Application {
 				throw new APException(NUMBER_STARTS_WITH_ZERO_EXCEPTION);
 			}
 		} else {
-			throw new APException(INVALID_INPUT_EXCEPTION);
+			throw new APException(INVALID_NATURAL_NUMBER);
 		}
 
 		return result;
