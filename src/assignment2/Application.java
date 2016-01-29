@@ -7,10 +7,7 @@ import java.util.regex.Pattern;
 public class Application {
 
 	/**
-	 * Current issues (2):
-	 *
-	 * / The next line contains two assignments, and is not a statement according to the syntax
-	 * Alfa = {1, 10, 100, 1000}          Delta = {3, 4}
+	 * Current issues (1):
 	 *
 	 * Delta = Alfa        + Alfa + {     }*Bravo*(Alfa + Bravo)
 	 * / Delta is now equal to Alfa
