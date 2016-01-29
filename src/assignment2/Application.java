@@ -117,12 +117,6 @@ public class Application {
 		out.printf(STATEMENT, result.toString());
 	}
 
-	private void checkEndOfLine(Scanner lineScanner) throws APException {
-		if (lineScanner.hasNext()) {
-			throw new APException(END_OF_LINE_NOT_FOUND_EXCEPTION);
-		}
-	}
-
 	private void readComment(Scanner input) throws APException {
 		input.nextLine();
 	}
@@ -141,12 +135,15 @@ public class Application {
 		Set<NaturalNumber> expression = readExpression(input);
 
 		trimSpaces(input);
-
-		if (input.hasNext()) {
-			throw new APException(INVALID_STATEMENT_EXCEPTION);
-		}
+		checkEndOfLine(input);
 
 		assignments.put(identifier, expression);
+	}
+
+	private void checkEndOfLine(Scanner input) throws APException {
+		if (input.hasNext()) {
+			throw new APException(END_OF_LINE_NOT_FOUND_EXCEPTION);
+		}
 	}
 
 	private Identifier readIdentifier(Scanner input) throws APException {
