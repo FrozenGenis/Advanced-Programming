@@ -70,6 +70,6 @@ public interface IdentifierInterface<T> extends Data<T> {
 	 * @precondition -
 	 * @postcondition Returns whether the two identifiers are equal.
 	 */
-	boolean equals(IdentifierInterface identifier);
+	boolean equals(Object o);
 
 }

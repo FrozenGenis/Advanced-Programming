@@ -42,8 +42,8 @@ public class Identifier implements IdentifierInterface<Identifier> {
 	}
 
 	@Override
-	public boolean equals(IdentifierInterface that) {
-		return that != null && that.getClass() == this.getClass() && this.compareTo((Identifier) that) == 0;
+	public boolean equals(Object o) {
+		return o != null && o.getClass() == this.getClass() && this.compareTo((Identifier) o) == 0;
 	}
 
 	@Override

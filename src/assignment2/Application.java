@@ -6,6 +6,11 @@ import java.util.regex.Pattern;
 
 public class Application {
 
+	/*
+	 * Bravo = {17, 15, 13, 7, 9, 3, 5, 1 }
+	 * Bravo = {1, 3, 5, 7, 9, 1234567890, 13, 15, 17, 98765432100 }
+	 */
+
 	public static final String EMPTY_STRING = "";
 	public static final char SPACE = ' ';
 	public static final char ZERO = '0';
@@ -36,7 +41,7 @@ public class Application {
 	public static final String FACTOR_EXCEPTION = "Invalid factor.";
 	public static final String POSITIVE_NUMBER_NOT_FOUND_EXCEPTION = "Positive number not found.";
 	public static final String KEY_NOT_FOUND_EXCEPTION = "Map does not contain the specified key.";
-	public static final String UNKNOWN_COMMAND_EXCEPTION = "The command is not available";
+	public static final String UNKNOWN_COMMAND_EXCEPTION = "This command is not available.";
 	public static final String INVALID_INPUT_EXCEPTION = "Invalid input. NaturalNumber should only contain digits.";
 	public static final String NUMBER_STARTS_WITH_ZERO_EXCEPTION = "Number can't start with a 0 (eg. 05 is forbidden).";
 	public static final String CHAR_MISSING_EXCEPTION = "\'%c\' is missing.";

@@ -46,7 +46,6 @@ public class NaturalNumber implements NaturalNumberInterface<NaturalNumber> {
 	@Override
 	public int compareTo(NaturalNumber that) {
 		return Integer.valueOf(this.toString()).compareTo(Integer.valueOf(that.toString()));
-//		return this.getNumber().compareTo(that.getNumber());
 	}
 
 	@Override

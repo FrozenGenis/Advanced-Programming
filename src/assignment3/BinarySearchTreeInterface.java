@@ -39,7 +39,7 @@ public interface BinarySearchTreeInterface<E extends Data<E>> extends Clonable<B
 	BinarySearchTree<E> remove(E element);
 
 	/**
-	 * Returns the data as an iterator in a monotone non-increasing order.
+	 * Returns the data as an iterator in a monotone non-decreasing order.
 	 *
 	 * @precondition -
 	 * @postcondition - The data in the iterator returned is sorted in a monotone non-decreasing order.
