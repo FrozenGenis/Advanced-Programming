@@ -9,7 +9,8 @@ public class Application {
 	/**
 	 * Current issues (3):
 	 *
-	 * Nasty check: Charlie
+	 * Nasty check '/' (this should throw an error)
+	 * Charlie = {12, 345, 65, 67, 5, 435, 879, 90, 867} / + {1, 45, 12, 342, 546}
 	 *
 	 * / The next line contains two assignments, and is not a statement according to the syntax
 	 * Alfa = {1, 10, 100, 1000}          Delta = {3, 4}
