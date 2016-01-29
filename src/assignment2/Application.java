@@ -9,9 +9,6 @@ public class Application {
 	/**
 	 * Current issues (3):
 	 *
-	 * Nasty check '/' (this should throw an error)
-	 * Charlie = {12, 345, 65, 67, 5, 435, 879, 90, 867} / + {1, 45, 12, 342, 546}
-	 *
 	 * / The next line contains two assignments, and is not a statement according to the syntax
 	 * Alfa = {1, 10, 100, 1000}          Delta = {3, 4}
 	 *
@@ -48,11 +45,12 @@ public class Application {
 	public static final String ASSIGNMENT_NOT_FOUND_EXCEPTION = "'=' expected but not found.";
 	public static final String FACTOR_EXCEPTION = "Invalid factor.";
 	public static final String POSITIVE_NUMBER_NOT_FOUND_EXCEPTION = "Positive number not found.";
-	public static final String KEY_NOT_FOUND_EXCEPTION = "Map does not contain the specified key.";
+	public static final String KEY_NOT_FOUND_EXCEPTION = "The specified key [%s] could not be found.";
 	public static final String UNKNOWN_COMMAND_EXCEPTION = "The command [%c] is not available.";
 	public static final String INVALID_INPUT_EXCEPTION = "Invalid input. NaturalNumber should only contain digits.";
 	public static final String NUMBER_STARTS_WITH_ZERO_EXCEPTION = "Number can't start with a 0 (eg. 05 is forbidden).";
 	public static final String CHAR_MISSING_EXCEPTION = "\'%c\' is missing.";
+	public static final String COMMENT_IN_ASSIGNMENT_EXCEPTION = "The '/' should not be in the middle of an assignment!";
 
 	private PrintStream out;
 
@@ -135,6 +133,13 @@ public class Application {
 	}
 
 	private void readComment(Scanner input) throws APException {
+		nextChar(input);
+		trimSpaces(input);
+
+		if (nextCharIsMultiplicativeOperator(input) || nextCharIsAdditiveOperator(input)) {
+			throw new APException(COMMENT_IN_ASSIGNMENT_EXCEPTION);
+		}
+
 		input.nextLine();
 	}
 
@@ -240,7 +245,7 @@ public class Application {
 		Identifier identifier = readIdentifier(input);
 
 		if (!assignments.contains(identifier)) {
-			throw new APException(KEY_NOT_FOUND_EXCEPTION);
+			throw new APException(String.format(KEY_NOT_FOUND_EXCEPTION, identifier));
 		}
 
 		return assignments.get(identifier);
