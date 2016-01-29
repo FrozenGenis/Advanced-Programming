@@ -6,16 +6,10 @@ import java.util.regex.Pattern;
 
 public class Application {
 
-	/**
-	 * Current issues (1):
-	 *
-	 * Delta = Alfa        + Alfa + {     }*Bravo*(Alfa + Bravo)
-	 * / Delta is now equal to Alfa
-	 */
-
 	public static final String EMPTY_STRING = "";
 	public static final char SPACE = ' ';
 	public static final char ZERO = '0';
+	public static final String PATTERN = "%c";
 	public static final String LETTER = "[a-zA-Z]";
 	public static final String DIGIT = "[0-9]";
 	public static final String POSITIVE_DIGIT = "[1-9]";
@@ -369,7 +363,7 @@ public class Application {
 	}
 
 	private boolean nextCharIs(Scanner input, char c) {
-		return input.hasNext(Pattern.quote(String.format("%c", c)));
+		return input.hasNext(Pattern.quote(String.format(PATTERN, c)));
 	}
 
 	private char nextChar(Scanner input) {

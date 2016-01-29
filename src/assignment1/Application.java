@@ -18,6 +18,7 @@ public class Application {
 
 	public static final String EMPTY_STRING = "";
 	public static final String SPACE = " ";
+	public static final String PATTERN = "%c";
 	private static final String DIGIT = "[0-9]";
 	private static final String LETTER = "[a-zA-Z]";
 
@@ -102,7 +103,7 @@ public class Application {
 	}
 
 	private boolean nextCharIs(Scanner in, char c) {
-		return in.hasNext(Pattern.quote(String.format("%c", c)));
+		return in.hasNext(Pattern.quote(String.format(PATTERN, c)));
 	}
 
 	private char nextChar(Scanner in) {
