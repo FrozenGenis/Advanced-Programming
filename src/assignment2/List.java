@@ -112,12 +112,22 @@ public class List<E extends Data<E>> implements ListInterface<E> {
 	}
 
 	private void insertBeforeCurrent(E e) {
-		current.prior = new Node(e, current.prior, current);
+		if (current.prior == null) {
+			current.prior = new Node(e, current.prior, current);
+		} else {
+			current.prior = current.prior.next = new Node(e, current.prior, current);
+		}
+
 		current = current.prior;
 	}
 
 	private void insertAfterCurrent(E e) {
-		current.next = new Node(e, current, current.next);
+		if (current.next == null) {
+			current.next = new Node(e, current, current.next);
+		} else {
+			current.next = current.next.prior = new Node(e, current, current.next);
+		}
+
 		current = current.next;
 	}
 

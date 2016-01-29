@@ -100,17 +100,6 @@ public class ListTest {
 		list.goToLast();
 		assertEquals(k, list.retrieve());
 
-		// Test current order (a, c, f, k)
-		list.goToFirst();
-		assertEquals(a, list.retrieve());
-		list.goToNext();
-		assertEquals(c, list.retrieve());
-		list.goToNext();
-		assertEquals(f, list.retrieve());
-		list.goToNext();
-		assertEquals(k, list.retrieve());
-		assertFalse(list.goToNext());
-
 		// Insert between two items.
 		// The order has to be preserved when inserting an item between existing items.
 		Letter b = new Letter('b');
@@ -166,16 +155,16 @@ public class ListTest {
 		n10.setNumber("10");
 
 		List<NaturalNumber> numberList = new List<>();
-		numberList.insert(n1);
-		numberList.insert(n2);
-		numberList.insert(n3);
-		numberList.insert(n4);
 		numberList.insert(n5);
-		numberList.insert(n6);
-		numberList.insert(n7);
+		numberList.insert(n2);
 		numberList.insert(n8);
-		numberList.insert(n9);
+		numberList.insert(n1);
+		numberList.insert(n7);
+		numberList.insert(n4);
 		numberList.insert(n10);
+		numberList.insert(n3);
+		numberList.insert(n6);
+		numberList.insert(n9);
 
 		numberList.goToFirst();
 		assertEquals(n1, numberList.retrieve());
