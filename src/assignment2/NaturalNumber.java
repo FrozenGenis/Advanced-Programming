@@ -45,7 +45,23 @@ public class NaturalNumber implements NaturalNumberInterface<NaturalNumber> {
 
 	@Override
 	public int compareTo(NaturalNumber that) {
-		return Integer.valueOf(this.toString()).compareTo(Integer.valueOf(that.toString()));
+		if (this.length() > that.length()) {
+			return 1;
+		} else if (this.length() < that.length()) {
+			return -1;
+		} // else equal length
+
+		for (int i = 0; i < this.length(); i++) {
+			Character thisDigit = this.getDigit(i);
+			Character thatDigit = that.getDigit(i);
+			int comparison = thisDigit.compareTo(thatDigit);
+
+			if (comparison != 0) {
+				return comparison;
+			}
+		}
+
+		return 0;
 	}
 
 	@Override

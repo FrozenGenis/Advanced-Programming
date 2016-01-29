@@ -17,10 +17,12 @@ public class List<E extends Data<E>> implements ListInterface<E> {
 		numberOfNodes = INITIAL_AMOUNT_OF_NODES;
 	}
 
+	@Override
 	public boolean isEmpty() {
 		return current == null;
 	}
 
+	@Override
 	public List<E> init() {
 		numberOfNodes = INITIAL_AMOUNT_OF_NODES;
 		first = last = current = null;
@@ -28,10 +30,12 @@ public class List<E extends Data<E>> implements ListInterface<E> {
 		return this;
 	}
 
+	@Override
 	public int size() {
 		return numberOfNodes;
 	}
 
+	@Override
 	public List<E> insert(E e) {
 		if (numberOfNodes == 0) {
 			last = current = first = new Node(e);
@@ -117,10 +121,12 @@ public class List<E extends Data<E>> implements ListInterface<E> {
 		current = current.next;
 	}
 
+	@Override
 	public E retrieve() {
 		return current.data.clone();
 	}
 
+	@Override
 	public List<E> remove() {
 		if (numberOfNodes == 1) {
 			first = last = current = null;
@@ -140,15 +146,16 @@ public class List<E extends Data<E>> implements ListInterface<E> {
 		return this;
 	}
 
-	public boolean find(E e) {
+	@Override
+	public boolean find(E d) {
 		if (numberOfNodes == 0) {
 			return false;
 		}
 
 		current = first;
 
-		while (current != null && e.compareTo(current.data) >= 0) {
-			if (e.compareTo(current.data) == 0) {
+		while (current != null && d.compareTo(current.data) >= 0) {
+			if (d.compareTo(current.data) == 0) {
 				return true;
 			}
 			current = current.next;
@@ -156,13 +163,20 @@ public class List<E extends Data<E>> implements ListInterface<E> {
 
 		if (current == null) {
 			current = last;
+		} else if (first.data.compareTo(d) > 0) {
+			current = first;
 		} else {
-			current = current.prior;
+			current = first;
+
+			while (current.next != null && current.next.data.compareTo(d) < 0) {
+				current = current.next;
+			}
 		}
 
 		return false;
 	}
 
+	@Override
 	public boolean goToFirst() {
 		if (numberOfNodes == 0) {
 			return false;
@@ -172,6 +186,7 @@ public class List<E extends Data<E>> implements ListInterface<E> {
 		return true;
 	}
 
+	@Override
 	public boolean goToLast() {
 		if (numberOfNodes == 0) {
 			return false;
@@ -181,6 +196,7 @@ public class List<E extends Data<E>> implements ListInterface<E> {
 		return true;
 	}
 
+	@Override
 	public boolean goToNext() {
 		if (numberOfNodes == 0 || current == last) {
 			return false;
@@ -190,6 +206,7 @@ public class List<E extends Data<E>> implements ListInterface<E> {
 		return true;
 	}
 
+	@Override
 	public boolean goToPrevious() {
 		if (numberOfNodes == 0 || current == first) {
 			return false;
@@ -215,9 +232,9 @@ public class List<E extends Data<E>> implements ListInterface<E> {
 
 	public class Node {
 
-		E data;
-		Node prior;
-		Node next;
+		private E data;
+		private Node prior;
+		private Node next;
 
 		@SuppressWarnings("unused")
 		public Node() {
