@@ -25,13 +25,15 @@ public class Collection implements CollectionInterface {
 		this.amountOfElements = collection.amountOfElements;
 	}
 
+	@Override
 	public Collection init() {
 		amountOfElements = 0;
 		return this;
 	}
 
+	@Override
 	public void add(Identifier identifier) {
-		if (this.hasIdentifier(identifier)) {
+		if (this.contains(identifier)) {
 			return;
 		}
 
@@ -39,20 +41,24 @@ public class Collection implements CollectionInterface {
 		amountOfElements += 1;
 	}
 
+	@Override
 	public Identifier get() {
 		amountOfElements -= 1;
 		return identifiers[amountOfElements];
 	}
 
+	@Override
 	public boolean isEmpty() {
 		return amountOfElements == 0;
 	}
 
+	@Override
 	public int size() {
 		return amountOfElements;
 	}
 
-	public boolean hasIdentifier(Identifier identifier) {
+	@Override
+	public boolean contains(Identifier identifier) {
 		for (int i = 0; i < amountOfElements; i++) {
 			if (identifier.equals(identifiers[i])) {
 				return true;
@@ -62,6 +68,7 @@ public class Collection implements CollectionInterface {
 		return false;
 	}
 
+	@Override
 	public String toString() {
 		if (amountOfElements == 0) {
 			return "";
@@ -84,7 +91,7 @@ public class Collection implements CollectionInterface {
 		Collection result = new Collection();
 
 		for (int i = 0; i < this.amountOfElements; i++) {
-			if (!collection.hasIdentifier(this.identifiers[i])) {
+			if (!collection.contains(this.identifiers[i])) {
 				result.add(this.identifiers[i]);
 			}
 		}
@@ -96,7 +103,7 @@ public class Collection implements CollectionInterface {
 		Collection result = new Collection();
 
 		for (int i = 0; i < this.amountOfElements; i++) {
-			if (collection.hasIdentifier(this.identifiers[i])) {
+			if (collection.contains(this.identifiers[i])) {
 				result.add(this.identifiers[i]);
 			}
 		}
@@ -108,7 +115,7 @@ public class Collection implements CollectionInterface {
 		Collection result = new Collection(this);
 
 		for (int i = 0; i < collection.amountOfElements; i++) {
-			if (!this.hasIdentifier(collection.identifiers[i])) {
+			if (!this.contains(collection.identifiers[i])) {
 				result.add(collection.identifiers[i]);
 
 				if (result.size() > 20) {
@@ -124,13 +131,13 @@ public class Collection implements CollectionInterface {
 		Collection result = new Collection();
 
 		for (int i = 0; i < this.amountOfElements; i++) {
-			if (!collection.hasIdentifier(this.identifiers[i])) {
+			if (!collection.contains(this.identifiers[i])) {
 				result.add(this.identifiers[i]);
 			}
 		}
 
 		for (int i = 0; i < collection.amountOfElements; i++) {
-			if (!this.hasIdentifier(collection.identifiers[i])) {
+			if (!this.contains(collection.identifiers[i])) {
 				result.add(collection.identifiers[i]);
 			}
 		}

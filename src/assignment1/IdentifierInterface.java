@@ -17,64 +17,64 @@ public interface IdentifierInterface {
 	 *		@postcondition
 	 *           The new Identifier-object contains 'a'.
 	 *	Identifier (Identifier src);
-	 *       @precondition
+	 *      @precondition
 	 *           -
 	 *		@postcondition
-	 *           The new Identifier-object contains a copy of the src.
+	 *           The new Identifier-object contains a copy of the parameter src.
 	 **/
 
 	/**
-	 * @precondition c must be a letter;
-	 * @postcondition Replaces existing characters with c;
+	 * @precondition    Parameter c must be a letter.
+	 * @postcondition   Replaces existing characters with c.
 	 */
 	IdentifierInterface init(char c);
 
 	/**
 	 * Returns the value of the element
 	 *
-	 * @precondition -
-	 * @postcondition The identifier is returned as a String.
+	 * @precondition    -
+	 * @postcondition   The identifier is returned as a String.
 	 **/
 	String getName();
 
 	/**
 	 * Replaces the identifier with name.
 	 *
-	 * @precondition The first character of name must be a letter AND length > 0 AND all characters must be alphanumeric.
-	 * @postcondition Replaces the identifier with name.
+	 * @precondition    The first character of name must be a letter AND length > 0 AND all characters must be alphanumeric.
+	 * @postcondition   Replaces the identifier with name.
 	 **/
 	void setName(String name);
 
 	/**
 	 * Adds c to the end of the Identifier.
 	 *
-	 * @precondition Must be an alphanumeric character.
-	 * @postcondition c is added to the end of the Identifier.
+	 * @precondition    Parameter c must be an alphanumeric character.
+	 * @postcondition   Parameter c is added to the end of the Identifier.
 	 */
 	void addChar(char c);
 
 	/**
 	 * Returns the character at the given position.
 	 *
-	 * @precondition The position must be > 0 AND <= length of the Identifier.
-	 * @postcondition The character at the given position is returned.
+	 * @precondition    The position must be > 0 AND <= length of the Identifier.
+	 * @postcondition   The character at the given position is returned.
 	 */
 	char getChar(int position);
 
 	/**
 	 * Returns the length of the identifier.
 	 *
-	 * @precondition -
-	 * @postcondition Length of the identifier is returned.
+	 * @precondition    -
+	 * @postcondition   Length of the identifier is returned.
 	 */
 	int length();
 
 	/**
 	 * Returns whether the two identifiers are equal.
 	 *
-	 * @precondition -
-	 * @postcondition Returns whether the two identifiers are equal.
+	 * @precondition    -
+	 * @postcondition   Returns whether the two identifiers are equal.
 	 */
-	boolean equals(Identifier identifier);
+	boolean equals(Object o);
 
 }
