@@ -12,28 +12,34 @@ public class NaturalNumber implements NaturalNumberInterface<NaturalNumber> {
 		number = new StringBuffer(DEFAULT_NUMBER);
 	}
 
+	@Override
 	public NaturalNumber init(char c) {
 		number = new StringBuffer();
 		number.append(c);
 		return this;
 	}
 
+	@Override
 	public String getNumber() {
 		return number.toString();
 	}
 
+	@Override
 	public void setNumber(String number) {
 		this.number = new StringBuffer(number);
 	}
 
+	@Override
 	public void addDigit(char c) {
 		number.append(c);
 	}
 
+	@Override
 	public char getDigit(int position) {
 		return number.charAt(position);
 	}
 
+	@Override
 	public int length() {
 		return number.length();
 	}

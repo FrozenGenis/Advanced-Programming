@@ -52,6 +52,11 @@ public class Identifier implements IdentifierInterface<Identifier> {
 	}
 
 	@Override
+	public String toString() {
+		return name.toString();
+	}
+
+	@Override
 	public Identifier clone() {
 		Identifier result;
 
@@ -64,11 +69,6 @@ public class Identifier implements IdentifierInterface<Identifier> {
 		result.name = new StringBuffer(name);
 
 		return result;
-	}
-
-	@Override
-	public String toString() {
-		return name.toString();
 	}
 
 }

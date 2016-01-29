@@ -6,9 +6,9 @@ public interface IdentifierInterface {
 	 *
 	 * @author : Leroy Truong & Radu Sibechi
 	 *
-	 * @elements : alphanumeric characters of the type Char
+	 * @elements :  alphanumeric characters of the type Char
 	 * @structure : linear
-	 * @domain : first character is a letter AND length > 0
+	 * @domain :    first character is a letter AND length > 0
 	 *
 	 * @constructor
 	 *	Identifier();
@@ -56,7 +56,7 @@ public interface IdentifierInterface {
 	/**
 	 * Returns the character at the given position.
 	 *
-	 * @precondition    The position must be > 0 AND <= length of the Identifier.
+	 * @precondition    The parameter position must be > 0 AND <= length of the Identifier.
 	 * @postcondition   The character at the given position is returned.
 	 */
 	char getChar(int position);
@@ -73,7 +73,7 @@ public interface IdentifierInterface {
 	 * Returns whether the two identifiers are equal.
 	 *
 	 * @precondition    -
-	 * @postcondition   Returns whether the two identifiers are equal.
+	 * @postcondition   Returns whether the given object is equal to this identifier.
 	 */
 	boolean equals(Object o);
 

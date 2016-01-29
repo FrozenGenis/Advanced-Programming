@@ -93,6 +93,7 @@ public class Map<K extends Data<K>, V extends Clonable<V>> implements MapInterfa
 			this.value = value.clone();
 		}
 
+		@Override
 		public MapEntry clone() {
 			MapEntry result;
 
@@ -110,7 +111,6 @@ public class Map<K extends Data<K>, V extends Clonable<V>> implements MapInterfa
 		}
 
 		@Override
-		@SuppressWarnings("NullableProblems")
 		public int compareTo(MapEntry that) {
 			return this.key.compareTo(that.key);
 		}

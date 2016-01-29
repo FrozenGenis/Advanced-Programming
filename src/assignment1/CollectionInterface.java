@@ -6,9 +6,9 @@ public interface CollectionInterface {
 	 *
 	 * @author : Leroy Truong & Radu Sibechi
 	 *
-	 * @elements : strings of the type Identifier
+	 * @elements :  strings of the type Identifier
 	 * @structure : none
-	 * @domain : can only contain up to 20 elements
+	 * @domain :    can only contain up to 20 elements
 	 *
 	 * @constructor
 	 *	Collection();
